@@ -41,6 +41,20 @@ var Generator = module.exports = function Generator() {
     this.env.options.coffee = this.options.coffee;
   }
 
+  this.env.options.ls = this.options.ls;
+  if (typeof this.env.options.ls === 'undefined') {
+    this.option('ls');
+
+    // attempt to detect if user is using CS or not
+    // if cml arg provided, use that; else look for the existence of cs
+    if (!this.options.ls &&
+      this.expandFiles(path.join(this.env.options.appPath, '/scripts/**/*.ls'), {}).length > 0) {
+      this.options.ls = true;
+    }
+
+    this.env.options.ls = this.options.ls;
+  }
+
   if (typeof this.env.options.minsafe === 'undefined') {
     this.option('minsafe');
     this.env.options.minsafe = this.options.minsafe;
@@ -52,6 +66,11 @@ var Generator = module.exports = function Generator() {
   if (this.env.options.coffee) {
     sourceRoot = '/templates/coffeescript';
     this.scriptSuffix = '.coffee';
+  }
+
+  if (this.env.options.coffee) {
+    sourceRoot = '/templates/livescript';
+    this.scriptSuffix = '.ls';
   }
 
   if (this.env.options.minsafe) {
