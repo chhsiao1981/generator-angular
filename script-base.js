@@ -68,7 +68,7 @@ var Generator = module.exports = function Generator() {
     this.scriptSuffix = '.coffee';
   }
 
-  if (this.env.options.coffee) {
+  if (this.env.options.ls) {
     sourceRoot = '/templates/livescript';
     this.scriptSuffix = '.ls';
   }
